@@ -1,6 +1,6 @@
-# Word Similarity and Semantic Relationship Analysis (in progress)
+# Word Similarity and Semantic Relationship Analysis (work in progress)
 
-This repository provides a tool designed to receive a single word as input and return its synonyms, along with any nuanced distinctions between them. The objective is to not only find synonyms but also to provide additional information on subtle differences in meaning, such as formality, gender or plurality.
+This repository provides a tool designed to analyze the semantic relationships of words. By accepting a single word as input, it returns similar words along with nuanced distinctions such as formality, gender, or plurality. The objective is to go beyond simple word retrieval by offering detailed contextual differences.
 
 ### Objective example:
 
@@ -10,48 +10,52 @@ This repository provides a tool designed to receive a single word as input and r
 - `performer` (more formal)
 
 
-### Last implementation:
+### Current implementation:
 
 **Input**: `actor`  
 **Output**:
-- `actress` (female) 
-- `performer` (more formal)
+- `actress` (gender) 
 
 
-The tool leverages pre-trained **Word2Vec embeddings** to compute the semantic similarity between words and analyze their relationships across various predefined dimensions.
+The tool uses pre-trained embeddings to calculate semantic similarity and analyze relationships across various predefined dimensions.
 
-### Pre-trained Model
+## Pre-trained Models
+You can utilize any model of your choice. Below are some recommended pre-trained models available for free download. Place the downloaded model in the models/ folder and update the model_path variable in the script accordingly.
 
-A pre-trained Word2Vec model is required to use this tool. You can download the model from the following link:
-
-[Download Word2Vec Model](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing)
-
-
-### Notebooks
-
-The **Jupyter Notebooks** in this repository are key to experimenting with the tool’s capabilities. 
-
-In particular, the `semantic_dimensions.ipynb` notebook is crucial for exploring how the model analyzes word relationships along different semantic axes like formality and gender.
+Word2Vec Model: [Download Word2Vec Model](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing)
 
 
-### Directory Structure
+GloVe Model: [Download GloVe Model](https://github.com/stanfordnlp/GloVe)
+
+
+## Jupyter Notebooks
+
+This repository includes Jupyter Notebooks to facilitate exploration and experimentation with the tool’s capabilities.
+
+TODO : Explain a bit of each one
+
+
+## Directory Structure
 
 Here’s a breakdown of the repository structure
 ```
 .
-├── data/                        # Folder for data (will be used in the future)
+├── data/                        # Folder for data (future use)
 ├── experiments/                 # Folder for Jupyter Notebooks
-├── models/                      # Here is where the models are        
+├── models/                            
 ├── main.py                          
 ├── README.md                        
-├── requirements.txt                 
-└── utils.py   
+├── requirements.txt
+├── semantic_dimensions_config.json    
+├── semantic_dimensions.py
+├── utils.py  
+└── visualization_utils.py  
 ```
 
 
-### Dependencies
+## Dependencies
 
-To run this project, you'll need to install the required dependencies. You can do this by running the following command:
+Install the required dependencies by running the following command:
 
 ```
 pip install -r requirements.txt
@@ -59,7 +63,7 @@ pip install -r requirements.txt
 
 ## Running the `main.py` Script
 
-To run the `main.py` script, follow these steps:
+To execute the main.py script, follow these steps:
 
 1. **Install Dependencies:**
    First, make sure all the required dependencies are installed. You can install them by running:
@@ -67,14 +71,26 @@ To run the `main.py` script, follow these steps:
    ```bash
    pip install -r requirements.txt
    ```
+
+2. **Download Pre-trained Model:**
+    Download your chosen model (e.g., Word2Vec or GloVe) and place it in the models/ folder. Update the model_path variable in the script to point to the correct location.
    
-2. **Running the Script:**
-    Once the dependencies are installed and the model is downloaded, you can run the script from your terminal. Use the following command:
+3. **Run the Script:**
+    Execute the script from your terminal using the following command:
 
     ```
-    python main.py <word> --N <number>
+    python main.py <word>
     ```
-    - Replace <word> with the word you want to find synonyms for.
-    - Replace <number> with the number of top synonyms you want to retrieve (this is optional, defaults to 5).
+    Replace `<word>` with the input word for which you want to find similar words and analyze relationships.
 
-3. TO DO
+## Future Enhancements (TODO)
+
+The ultimate goal of this project is to find the best approach for distinguishing words based on pre-defined, understandable nuances. To achieve this, the following aspects will be explored:
+
+### Key Considerations
+1. **Model Selection**
+
+    Currently using Word2Vec and GloVe.
+    Future plans include implementing more advanced models such as BERT to capture contextual and nuanced word relationships more effectively.
+
+2. 

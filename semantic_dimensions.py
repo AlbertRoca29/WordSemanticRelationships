@@ -22,13 +22,6 @@ class SemanticDimension:
     def get_vector(self):
         return self.vector
 
-def get_semantic_dimensions(model, config):
-    semantic_dimensions = {}
-    for dimension, words in config.items():
-        dimension_obj = SemanticDimension(model, words)
-        semantic_dimensions[dimension] = dimension_obj.get_vector()
-    return semantic_dimensions
-
 def project_onto_semantic_dimension(word_vector, semantic_dimension):
     return np.dot(word_vector, semantic_dimension) * semantic_dimension
 
@@ -49,8 +42,19 @@ def analyze_word_relationship(word1, word2, model, SemanticDimensions):
         }
     return relationship
 
-def compute_contraposition(model, positive_words, negative_words):
-    positive_vector = np.mean([model[word] for word in positive_words], axis=0)
-    negative_vector = np.mean([model[word] for word in negative_words], axis=0)
-    contraposition = positive_vector - negative_vector
-    return contraposition / np.linalg.norm(contraposition)
+
+def compute_contraposition(model, word_pairs):
+    word_pairs = np.array(word_pairs)
+    assert word_pairs.shape[1] == 2, "Input array must have two columns (positive, negative)"
+    contraposition = np.mean([(model[pos] - model[neg])/np.linalg.norm(model[pos] - model[neg]) for pos, neg in word_pairs], axis=0)
+    return contraposition/np.linalg.norm(contraposition)
+
+
+def compute_semantic_dimensions(model, data):
+    semantic_dimensions = {}
+
+    for dimension, values in data.items():
+        contraposition = compute_contraposition(model, values)
+        semantic_dimensions[dimension] = contraposition
+
+    return semantic_dimensions
